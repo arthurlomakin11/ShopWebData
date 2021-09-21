@@ -18,7 +18,6 @@ namespace ShopWebData
         public Cart Cart { get; set; }
         public int ProductId { get; set; }
 
-        [JsonIgnore]
         public Product Product { get; set; }
         [Column(TypeName = "decimal(7, 3)")]
         public decimal Price { get; set; }

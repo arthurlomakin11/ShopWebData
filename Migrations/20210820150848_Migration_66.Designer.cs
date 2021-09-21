@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopWebData;
 
 namespace ShopWebData.Migrations
 {
     [DbContext(typeof(ShopWebContext))]
-    partial class ShopWebContextModelSnapshot : ModelSnapshot
+    [Migration("20210820150848_Migration_66")]
+    partial class Migration_66
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -536,9 +538,6 @@ namespace ShopWebData.Migrations
 
                     b.Property<decimal>("GiftAmount")
                         .HasColumnType("decimal(3,2)");
-
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("IsGift")
                         .HasColumnType("bit");
@@ -1094,7 +1093,8 @@ namespace ShopWebData.Migrations
                     b.HasOne("ShopWebData.Product", "Product")
                         .WithMany("Images")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
 

@@ -1,15 +1,12 @@
-﻿using System.Reflection;
-
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 
 #nullable disable
 
 namespace ShopWebData
 {
-    public partial class ShopWebContext : IdentityDbContext<User>
+    public partial class ShopWebContext : IdentityDbContext<User>, IDataProtectionKeyContext
     {
         public ShopWebContext()
         {
@@ -37,14 +34,15 @@ namespace ShopWebData
         public virtual DbSet<ProductCollection> ProductCollections { get; set; }
         public virtual DbSet<ProductInCollection> ProductsInCollection { get; set; }
         public virtual DbSet<DeliveryPriceTag> DeliveryPriceTags { get; set; }
+        public virtual DbSet<DataProtectionKey> DataProtectionKeys { get; set; }
 
 
         public static string ConnectionString = "";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.EnableSensitiveDataLogging();           
+            // optionsBuilder.EnableSensitiveDataLogging();           
 
-            optionsBuilder.UseSqlServer(ConnectionString);            
+            optionsBuilder.UseSqlServer(ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -59,10 +57,11 @@ namespace ShopWebData
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products);
 
-                entity.HasMany(product => product.Images)
+                entity.HasMany(product => product.Images)                
                     .WithOne(image => image.Product)
                     .HasForeignKey(image => image.ProductId)
-                    .OnDelete(DeleteBehavior.Cascade);                
+                    .IsRequired(false)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
 

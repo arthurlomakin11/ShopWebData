@@ -22,7 +22,7 @@ namespace ShopWebData.Migrations
                 schema: "dbo",
                 table: "Images",
                 type: "int",
-                nullable: false,
+                nullable: true,
                 defaultValue: 0,
                 oldClrType: typeof(int),
                 oldType: "int",

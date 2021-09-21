@@ -44,6 +44,8 @@ namespace ShopWebData
 
         public bool IsGift { get; set; } = false;
 
+        public bool IsAvailable { get; set; } = true;
+
         [Column(TypeName = "decimal(3, 2)")]
         public decimal GiftAmount { get; set; } = 0.1M;
 
